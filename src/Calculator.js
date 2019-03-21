@@ -46,7 +46,9 @@ function Calculator(props) {
       total: total,
       monthlyRate: monthlyRate,
       interest: total - amount,
-      excel: `=PMT(${interestRate / 100}/12,${duration},-${amount},0,0)`
+      excel: `=PMT(${(interestRate / 100).toFixed(
+        4
+      )}/12,${duration},-${amount},0,0)`
     };
   } else {
     return { payments: [], total: 0, monthlyRate: 0, interest: 0, excel: "" };

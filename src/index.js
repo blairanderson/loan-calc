@@ -20,7 +20,7 @@ function App() {
   });
   const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
   return (
-    <div className="App">
+    <div className="mw8 tc center w-100 system-sans-serif">
       <h1>{document.title}</h1>
       <div className="cf ">
         <div className="fl w-50">
@@ -65,14 +65,20 @@ function App() {
             value={dollarify(interest)}
             label="Total Interest"
           />
-          <div>
-            <div>Excel Function</div>
-            <textarea style={{ width: "100%" }}>{excel}</textarea>
-          </div>
         </div>
       </div>
+      <div>
+        <div>Excel Function</div>
+        <input
+          readOnly={true}
+          style={{ userSelect: "all" }}
+          type="text"
+          value={excel}
+          className={inputClass}
+        />
+      </div>
       {payments.length > 0 && (
-        <table className="table mw8 center w-100 table-hover tr collapse">
+        <table className="table w-100 table-hover tr collapse">
           <thead>
             <tr>
               <th className="w-10 tl">#</th>
