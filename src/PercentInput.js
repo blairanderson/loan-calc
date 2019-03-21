@@ -15,13 +15,18 @@ function PercentInput(props) {
   return (
     <div>
       <div>
-        <div>{props.label || "MISSING LABEL"}</div>
+        <div>
+          <label className="f6 b db mb2">
+            {props.label || "MISSING LABEL"}
+          </label>
+        </div>
         <div>
           {focus ? (
             <input
               type="number"
               step={step}
               value={props.value}
+              className={props.className}
               onChange={onChange}
               onBlur={e => {
                 setFocus(false);
@@ -30,6 +35,7 @@ function PercentInput(props) {
           ) : (
             <input
               type="text"
+              className={props.className}
               value={`${props.value}%`}
               onFocus={e => {
                 setFocus(true);
@@ -38,22 +44,24 @@ function PercentInput(props) {
           )}
         </div>
       </div>
-      <div>
-        <input
-          type="range"
-          style={{
-            displa: "block",
-            width: "50%",
-            marginLeft: "auto",
-            marginRight: "auto"
-          }}
-          value={props.value}
-          step={step}
-          min={props.min}
-          max={props.max}
-          onChange={onChange}
-        />
-      </div>
+      {false && (
+        <div>
+          <input
+            type="range"
+            style={{
+              displa: "block",
+              width: "50%",
+              marginLeft: "auto",
+              marginRight: "auto"
+            }}
+            value={props.value}
+            step={step}
+            min={props.min}
+            max={props.max}
+            onChange={onChange}
+          />
+        </div>
+      )}
     </div>
   );
 }

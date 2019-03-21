@@ -14,13 +14,17 @@ function DurationInput(props) {
     <div>
       <div>
         <div>
-          {props.label || "MISSING LABEL"} ({durationCadence})
+          <label className="f6 b db mb2">
+            {props.label || "MISSING LABEL"}{" "}
+            <span className="normal black-60">({durationCadence})</span>
+          </label>
         </div>
         <div>
           {focus ? (
             <input
               type="number"
               step={step}
+              className={props.className}
               value={props.value}
               onChange={onChange}
               onBlur={e => {
@@ -30,6 +34,7 @@ function DurationInput(props) {
           ) : (
             <input
               type="text"
+              className={props.className}
               value={duration}
               onFocus={e => {
                 setFocus(true);
@@ -38,22 +43,23 @@ function DurationInput(props) {
           )}
         </div>
       </div>
-      <div>
-        <input
-          type="range"
-          style={{
-            displa: "block",
-            width: "50%",
-            marginLeft: "auto",
-            marginRight: "auto"
-          }}
-          value={props.value}
-          max={props.max}
-          step={step}
-          onChange={onChange}
-        />
-      </div>
-      <div />
+      {false && (
+        <div>
+          <input
+            type="range"
+            style={{
+              displa: "block",
+              width: "50%",
+              marginLeft: "auto",
+              marginRight: "auto"
+            }}
+            value={props.value}
+            max={props.max}
+            step={step}
+            onChange={onChange}
+          />
+        </div>
+      )}
     </div>
   );
 }

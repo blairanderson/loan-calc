@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import "./styles.css";
+import "tachyons";
 import NumberInput from "./NumberInput";
 import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
@@ -17,15 +18,17 @@ function App() {
     duration,
     interestRate
   });
+  const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
   return (
     <div className="App">
       <h1>{document.title}</h1>
-      <div className="cf">
+      <div className="cf ">
         <div className="fl w-50">
           <NumberInput
             label="Amount"
             type="float"
             value={amount}
+            className={inputClass}
             onChange={setAmount}
           />
           <DurationInput
@@ -33,6 +36,7 @@ function App() {
             type="integer"
             max={360}
             value={duration}
+            className={inputClass}
             onChange={setDuration}
           />
           <PercentInput
@@ -41,16 +45,23 @@ function App() {
             min={0}
             max={15}
             value={interestRate}
+            className={inputClass}
             onChange={setInterestRate}
           />
         </div>
         <div className="fl w-50">
-          <ReadOnlyNumberInput value={dollarify(total)} label="Total" />
           <ReadOnlyNumberInput
+            className={inputClass}
+            value={dollarify(total)}
+            label="Total"
+          />
+          <ReadOnlyNumberInput
+            className={inputClass}
             value={dollarify(monthlyRate)}
             label="Monthly Rate"
           />
           <ReadOnlyNumberInput
+            className={inputClass}
             value={dollarify(interest)}
             label="Total Interest"
           />
