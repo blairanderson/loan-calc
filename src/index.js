@@ -8,20 +8,54 @@ import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator, { dollarify } from "./Calculator";
+import queryString from "query-string";
+import Sharing from "./sharing";
 
 function App() {
-  const [amount, setAmount] = React.useState(100000);
-  const [duration, setDuration] = React.useState(120);
-  const [interestRate, setInterestRate] = React.useState(4.75);
+  const parsed = queryString.parse(window.location.search);
+  const [amount, setAmount] = React.useState(
+    parseFloat(parsed.amount || 100000)
+  );
+  const [duration, setDuration] = React.useState(
+    parseInt(parsed.duration || 120)
+  );
+  const [interestRate, setInterestRate] = React.useState(
+    parseFloat(parsed.interestRate || 2.5)
+  );
   const { payments, total, monthlyRate, interest, excel } = Calculator({
     amount,
     duration,
     interestRate
   });
   const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
+  function getQueryParams() {
+    return queryString.stringify({ amount, duration, interestRate });
+  }
+  function getNewUrl() {
+    return (
+      window.location.protocol +
+      "//" +
+      window.location.host +
+      window.location.pathname +
+      `?${getQueryParams()}`
+    );
+  }
+  React.useEffect(
+    () => {
+      function updateUrl() {
+        const newurl = getNewUrl();
+        window.history.pushState({ path: newurl }, "", newurl);
+      }
+
+      updateUrl();
+    },
+    [amount, duration, interestRate]
+  ); // ✅ Resync on change
+
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <h1>{document.title}</h1>
+      <Sharing path={getNewUrl()} />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput

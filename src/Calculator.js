@@ -1,10 +1,12 @@
 const DOLLARIFY = /\B(?=(\d{3})+(?!\d))/g;
 
 export function dollarify(num) {
-  return `$${num
-    .toFixed(2)
-    .toString()
-    .replace(DOLLARIFY, ",")}`;
+  return typeof num.toFixed === "function"
+    ? `$${num
+        .toFixed(2)
+        .toString()
+        .replace(DOLLARIFY, ",")}`
+    : `$${num.toString().replace(DOLLARIFY, ",")}`;
 }
 
 function Calculator(props) {

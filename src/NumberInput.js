@@ -50,7 +50,7 @@ function NumberInput(props) {
           <input
             type="range"
             style={{
-              displa: "block",
+              display: "block",
               width: "50%",
               marginLeft: "auto",
               marginRight: "auto"
