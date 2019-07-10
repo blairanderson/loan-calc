@@ -37,6 +37,7 @@ function NumberInput(props) {
             <input
               type="text"
               className={props.className}
+              readOnly={true}
               value={dollarify(props.value)}
               onFocus={e => {
                 setFocus(true);

@@ -9,8 +9,10 @@ import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator, { dollarify } from "./Calculator";
+import NavSuggestions from './Suggestions'
 import queryString from "query-string";
 import Sharing from "./sharing";
+import debounce from "./debounce";
 const DELAY_PUSH_STATE = 300;
 
 function getNewUrl(props) {
@@ -66,10 +68,11 @@ function App() {
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <h1>
-        {`$${amount} Loan`} <br />
+        {`${dollarify(amount)} Loan`} <br />
         {`${duration} Months @ ${interestRate}%`} <br />
         {`Open Source Loan Calculator`} <br />{" "}
       </h1>
+      <NavSuggestions />
       <Sharing path={getNewUrl()} />
       <div className="cf ">
         <div className="fl w-50">
@@ -166,25 +169,3 @@ function App() {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
-
-function debounce(func, wait, immediate) {
-  var timeout;
-
-  return function executedFunction() {
-    var context = this;
-    var args = arguments;
-
-    var later = function() {
-      timeout = null;
-      if (!immediate) func.apply(context, args);
-    };
-
-    var callNow = immediate && !timeout;
-
-    clearTimeout(timeout);
-
-    timeout = setTimeout(later, wait);
-
-    if (callNow) func.apply(context, args);
-  };
-}
