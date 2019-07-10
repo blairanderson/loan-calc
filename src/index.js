@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import useDocumentTitle from "@rehooks/document-title";
 
 import "./styles.css";
 import "tachyons";
@@ -10,51 +11,65 @@ import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator, { dollarify } from "./Calculator";
 import queryString from "query-string";
 import Sharing from "./sharing";
+const DELAY_PUSH_STATE = 300;
+
+function getNewUrl(props) {
+  return (
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname +
+    `?${queryString.stringify(props)}`
+  );
+}
+
+function pushStateNow(newUrl) {
+  window.history.pushState({ path: newUrl }, "", newUrl);
+}
+
+const pushState = debounce(pushStateNow, DELAY_PUSH_STATE);
+const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
 
 function App() {
   const parsed = queryString.parse(window.location.search);
+
   const [amount, setAmount] = React.useState(
     parseFloat(parsed.amount || 100000)
   );
+
   const [duration, setDuration] = React.useState(
-    parseInt(parsed.duration || 120)
+    parseInt(parsed.duration || 120, 10)
   );
+
   const [interestRate, setInterestRate] = React.useState(
     parseFloat(parsed.interestRate || 2.5)
+  );
+
+  useDocumentTitle(
+    `$${amount} Loan for ${duration} Months @ ${interestRate}% | Open Source Loan Calculator`
   );
   const { payments, total, monthlyRate, interest, excel } = Calculator({
     amount,
     duration,
     interestRate
   });
-  const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
-  function getQueryParams() {
-    return queryString.stringify({ amount, duration, interestRate });
-  }
-  function getNewUrl() {
-    return (
-      window.location.protocol +
-      "//" +
-      window.location.host +
-      window.location.pathname +
-      `?${getQueryParams()}`
-    );
-  }
-  React.useEffect(
-    () => {
-      function updateUrl() {
-        const newurl = getNewUrl();
-        window.history.pushState({ path: newurl }, "", newurl);
-      }
 
-      updateUrl();
-    },
-    [amount, duration, interestRate]
-  ); // ✅ Resync on change
+  React.useEffect(() => {
+    function updateUrl({ amount, duration, interestRate }) {
+      const newurl = getNewUrl({ amount, duration, interestRate });
+      pushState(newurl);
+    }
+
+    updateUrl({ amount, duration, interestRate });
+  }, [amount, duration, interestRate]); // ✅ Resync URL on change
 
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
-      <h1>{document.title}</h1>
+      <h1>
+        {`$${amount} Loan`} <br />
+        {`${duration} Months @ ${interestRate}%`} <br />
+        {`Open Source Loan Calculator`} <br />{" "}
+      </h1>
       <Sharing path={getNewUrl()} />
       <div className="cf ">
         <div className="fl w-50">
@@ -151,3 +166,25 @@ function App() {
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<App />, rootElement);
+
+function debounce(func, wait, immediate) {
+  var timeout;
+
+  return function executedFunction() {
+    var context = this;
+    var args = arguments;
+
+    var later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+
+    clearTimeout(timeout);
+
+    timeout = setTimeout(later, wait);
+
+    if (callNow) func.apply(context, args);
+  };
+}
