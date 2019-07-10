@@ -5,6 +5,7 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@rehooks/document-title": "1.0.1",
     "query-string": "6.4.0",
     "react": "16.8.3",
     "react-dom": "16.8.3",
