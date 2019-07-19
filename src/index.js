@@ -9,7 +9,7 @@ import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator, { dollarify } from "./Calculator";
-import NavSuggestions from "./Suggestions";
+import NavSuggestions from "./NavSuggestions";
 import queryString from "query-string";
 import Sharing from "./sharing";
 

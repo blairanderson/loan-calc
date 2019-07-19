@@ -4,15 +4,16 @@ import { dollarify } from "./Calculator";
 
 function AppTitle(props) {
   const { amount, duration, interestRate } = props;
-  useDocumentTitle(
-    `$${amount} Loan for ${duration} Months @ ${interestRate}% | Open Source Loan Calculator`
-  );
+  const title = "Open Source Loan Calculator";
+  const subtitle = `${dollarify(
+    amount
+  )}  @ ${interestRate}% for ${duration} Months`;
+  useDocumentTitle(`${subtitle} | ${title}`);
   return (
-    <h1>
-      {`${dollarify(amount)} Loan`} <br />
-      {`${duration} Months @ ${interestRate}%`} <br />
-      {`Open Source Loan Calculator`} <br />{" "}
-    </h1>
+    <div>
+      <h1>{title}</h1>
+      <h2>{subtitle}</h2>
+    </div>
   );
 }
 
