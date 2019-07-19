@@ -1,35 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import useDocumentTitle from "@rehooks/document-title";
 
 import "./styles.css";
 import "tachyons";
+import AppTitle from "./AppTitle";
 import NumberInput from "./NumberInput";
 import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator, { dollarify } from "./Calculator";
-import NavSuggestions from './Suggestions'
+import NavSuggestions from "./Suggestions";
 import queryString from "query-string";
 import Sharing from "./sharing";
-import debounce from "./debounce";
-const DELAY_PUSH_STATE = 300;
 
-function getNewUrl(props) {
-  return (
-    window.location.protocol +
-    "//" +
-    window.location.host +
-    window.location.pathname +
-    `?${queryString.stringify(props)}`
-  );
-}
-
-function pushStateNow(newUrl) {
-  window.history.pushState({ path: newUrl }, "", newUrl);
-}
-
-const pushState = debounce(pushStateNow, DELAY_PUSH_STATE);
 const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
 
 function App() {
@@ -47,33 +30,17 @@ function App() {
     parseFloat(parsed.interestRate || 2.5)
   );
 
-  useDocumentTitle(
-    `$${amount} Loan for ${duration} Months @ ${interestRate}% | Open Source Loan Calculator`
-  );
   const { payments, total, monthlyRate, interest, excel } = Calculator({
     amount,
     duration,
     interestRate
   });
 
-  React.useEffect(() => {
-    function updateUrl({ amount, duration, interestRate }) {
-      const newurl = getNewUrl({ amount, duration, interestRate });
-      pushState(newurl);
-    }
-
-    updateUrl({ amount, duration, interestRate });
-  }, [amount, duration, interestRate]); // ✅ Resync URL on change
-
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
-      <h1>
-        {`${dollarify(amount)} Loan`} <br />
-        {`${duration} Months @ ${interestRate}%`} <br />
-        {`Open Source Loan Calculator`} <br />{" "}
-      </h1>
+      <AppTitle {...{ amount, duration, interestRate }} />
       <NavSuggestions />
-      <Sharing path={getNewUrl()} />
+      <Sharing {...{ amount, duration, interestRate }} />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput

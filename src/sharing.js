@@ -1,11 +1,42 @@
 import React from "react";
 import queryString from "query-string";
+import debounce from "./debounce";
+const DELAY_PUSH_STATE = 300;
+
+function getNewUrl(props) {
+  return (
+    window.location.protocol +
+    "//" +
+    window.location.host +
+    window.location.pathname +
+    `?${queryString.stringify(props)}`
+  );
+}
+
+function pushStateNow(newUrl) {
+  window.history.pushState({ path: newUrl }, "", newUrl);
+}
+
+const pushState = debounce(pushStateNow, DELAY_PUSH_STATE);
+
 function Sharing(props) {
-  const encoded = encodeURI(props.path);
+  const { amount, duration, interestRate } = props;
+  const path = getNewUrl(props);
+  const encoded = encodeURI(path);
   const twitterparams = queryString.stringify({
     text: "Open Source Loan Calculator",
     url: encoded
   });
+
+  React.useEffect(() => {
+    function updateUrl({ amount, duration, interestRate }) {
+      const newurl = getNewUrl({ amount, duration, interestRate });
+      pushState(newurl);
+    }
+
+    updateUrl({ amount, duration, interestRate });
+  }, [amount, duration, interestRate]); // ✅ Resync URL on change
+
   return (
     <div>
       <a
@@ -50,7 +81,7 @@ function Sharing(props) {
 
       <a
         className="resp-sharing-button__link"
-        href={`mailto:?subject=Super%20fast%20and%20easy%20Social%20Media%20Sharing%20Buttons.%20No%20JavaScript.%20No%20tracking.&amp;body=${encoded}`}
+        href={`mailto:?subject=Open%20Source%20Loan%20Calculator&amp;body=${encoded}`}
         target="_self"
         aria-label="E-Mail"
       >

@@ -1,17 +1,20 @@
 const DOLLARIFY = /\B(?=(\d{3})+(?!\d))/g;
 
 export function dollarify(num) {
-  return typeof num.toFixed === "function"
-    ? `$${num
-        .toFixed(2)
-        .toString()
-        .replace(DOLLARIFY, ",")}`
-    : `$${num.toString().replace(DOLLARIFY, ",")}`;
+  const dollared =
+    typeof num.toFixed === "function"
+      ? `$${num
+          .toFixed(2)
+          .toString()
+          .replace(DOLLARIFY, ",")}`
+      : `$${num.toString().replace(DOLLARIFY, ",")}`;
+
+  const dollarsAndCents = dollared.split(".")
+  return dollarsAndCents[1] === "00" ? dollarsAndCents[0] : dollared
 }
 
 function Calculator(props) {
   const { amount, duration, interestRate } = props;
-  const payments = [];
   if (amount > 0 && duration > 0 && interestRate > 0) {
     const payments = Array.from({ length: duration + 1 });
     const r = interestRate / 100 / 12;
