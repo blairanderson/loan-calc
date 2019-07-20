@@ -6,7 +6,11 @@ function MenuLink(props) {
   return (
     <a
       title={`Open Source ${name}`}
-      onClick={onClick}
+      onClick={event => {
+        if (typeof onClick === "function") {
+          onClick(event, params);
+        }
+      }}
       className={"f6 fw6 b dib mr3 mb3 pb1 link hover-blue black-70 ttc"}
       href={`?${queryString.stringify(params)}`}
     >

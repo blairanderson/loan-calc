@@ -37,10 +37,17 @@ function App() {
     interestRate
   });
 
+  function NavClick(event, params) {
+    event.preventDefault();
+    setAmount(params.amount);
+    setDuration(params.duration);
+    setInterestRate(params.interestRate);
+  }
+
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <AppTitle {...{ amount, duration, interestRate }} />
-      <NavSuggestions />
+      <NavSuggestions onClick={NavClick} />
       <Sharing {...{ amount, duration, interestRate }} />
       <div className="cf ">
         <div className="fl w-50">
