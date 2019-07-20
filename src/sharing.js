@@ -38,7 +38,7 @@ function Sharing(props) {
   }, [amount, duration, interestRate]); // ✅ Resync URL on change
 
   return (
-    <div>
+    <div className="mv2">
       <a
         className="resp-sharing-button__link"
         href={`https://facebook.com/sharer/sharer.php?u=${encoded}`}
@@ -81,7 +81,7 @@ function Sharing(props) {
 
       <a
         className="resp-sharing-button__link"
-        href={`mailto:?subject=Open%20Source%20Loan%20Calculator&amp;body=${encoded}`}
+        href={`mailto:?subject=Open%20Source%20Loan%20Calculator&body=${encoded}`}
         target="_self"
         aria-label="E-Mail"
       >

@@ -48,7 +48,6 @@ function App() {
     <div className="mw8 tc center w-100 system-sans-serif">
       <AppTitle {...{ amount, duration, interestRate }} />
       <NavSuggestions onClick={NavClick} />
-      <Sharing {...{ amount, duration, interestRate }} />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput
@@ -94,6 +93,8 @@ function App() {
           />
         </div>
       </div>
+
+      <Sharing {...{ amount, duration, interestRate }} />
       <div>
         <div>Excel Function</div>
         <input
@@ -104,6 +105,7 @@ function App() {
           className={inputClass}
         />
       </div>
+
       {payments.length > 0 && (
         <table className="table w-100 table-hover tr collapse">
           <thead>
