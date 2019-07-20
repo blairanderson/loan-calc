@@ -12,6 +12,7 @@ import Calculator, { dollarify } from "./Calculator";
 import NavSuggestions from "./NavSuggestions";
 import queryString from "query-string";
 import Sharing from "./sharing";
+import Footer from "./Components/Footer";
 
 const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
 
@@ -130,6 +131,7 @@ function App() {
           </tbody>
         </table>
       )}
+      <Footer />
     </div>
   );
 }

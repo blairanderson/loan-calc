@@ -1,6 +1,6 @@
 const DOLLARIFY = /\B(?=(\d{3})+(?!\d))/g;
 
-export function dollarify(num) {
+export function dollarify(num, hideCents = false) {
   const dollared =
     typeof num.toFixed === "function"
       ? `$${num
@@ -9,8 +9,11 @@ export function dollarify(num) {
           .replace(DOLLARIFY, ",")}`
       : `$${num.toString().replace(DOLLARIFY, ",")}`;
 
-  const dollarsAndCents = dollared.split(".")
-  return dollarsAndCents[1] === "00" ? dollarsAndCents[0] : dollared
+  if (hideCents) {
+    const dollarsAndCents = dollared.split(".");
+    return dollarsAndCents[1] === "00" ? dollarsAndCents[0] : dollared;
+  }
+  return dollared;
 }
 
 function Calculator(props) {
