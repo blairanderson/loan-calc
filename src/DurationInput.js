@@ -2,10 +2,11 @@ import React from "react";
 
 function DurationInput(props) {
   function onChange(e) {
-    props.onChange(parseInt(e.target.value.split(" ")[0]));
+    props.onChange(parseInt(e.target.value.split(" ")[0],10));
   }
   const [focus, setFocus] = React.useState(false);
-  const [durationCadence, setDurationCadence] = React.useState("Months");
+  const durationCadence = "Months"
+  // const [durationCadence, setDurationCadence] = React.useState("Months");
 
   const step = "1";
   const duration = `${props.value} ${durationCadence}`;
@@ -35,7 +36,7 @@ function DurationInput(props) {
             <input
               type="text"
               className={props.className}
-              value={duration}
+              defaultValue={duration}
               onFocus={e => {
                 setFocus(true);
               }}
@@ -66,18 +67,18 @@ function DurationInput(props) {
 
 export default DurationInput;
 
-function Foobar() {
-  const durationCadence = "";
-  function setDurationCadence() {}
-  return (
-    <select
-      value={durationCadence}
-      onChange={e => {
-        setDurationCadence(e.target.value);
-      }}
-    >
-      <option value={"months"}>months</option>
-      <option value={"years"}>yeary</option>
-    </select>
-  );
-}
+// function Foobar() {
+//   const durationCadence = "";
+//   function setDurationCadence() {}
+//   return (
+//     <select
+//       value={durationCadence}
+//       onChange={e => {
+//         setDurationCadence(e.target.value);
+//       }}
+//     >
+//       <option value={"months"}>months</option>
+//       <option value={"years"}>yeary</option>
+//     </select>
+//   );
+// }

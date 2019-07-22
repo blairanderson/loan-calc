@@ -1,5 +1,6 @@
 import React from "react";
 import queryString from "query-string";
+import ZillowNav from './Components/ZillowNav'
 
 function MenuLink(props) {
   const { name, onClick, params } = props;
@@ -42,6 +43,7 @@ function NavSuggestions(props) {
           );
         })}
       </div>
+      <ZillowNav/>
     </header>
   );
 }
