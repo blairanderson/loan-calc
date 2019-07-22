@@ -9,10 +9,12 @@ function Rates(props) {
   const { rates, chart, duration, amount } = props;
   const first = chart[0].data;
   rates.forEach(function({ text, rate, apr }) {
-    chart.push({
-      name: text,
-      data: first.fill(parseFloat(apr))
+    const data = {};
+    const level = parseFloat(apr);
+    Object.keys(first).forEach(function(key) {
+      data[key] = level;
     });
+    chart.push({ name: text, data: data });
   });
 
   return (
@@ -67,7 +69,7 @@ function ZillowNav(props) {
   const { rates, chart } = data;
 
   return rates && chart ? (
-    <Rates {...props}  rates={data.rates} chart={data.chart} />
+    <Rates {...props} rates={data.rates} chart={data.chart} />
   ) : (
     ""
   );
