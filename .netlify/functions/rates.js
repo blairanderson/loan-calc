@@ -36,7 +36,7 @@ async function handler(event, context) {
     var averageAPR = (totalAPR / samples.length).toFixed(3);
     var averageRATE = (totalRATE / samples.length).toFixed(3);
 
-    resp['rates'] = [
+    resp["rates"] = [
       { text: "Current Rate", rate: last.rate, apr: last.apr },
       {
         text: `${samples.length - 1} Day Average`,
@@ -45,10 +45,29 @@ async function handler(event, context) {
       }
     ];
 
-    resp['chart'] = samples.reduce(function(acc, { time, rate }, ind, src) {
+    var historical = samples.reduce(function(acc, { time, rate }, ind, src) {
       acc[time] = rate;
       return acc;
     }, {});
+
+    var forecast = await axios.get(
+      "https://trendapi.org/forecast",
+      historical,
+      {
+        headers: {
+          Accept: "application/json"
+        },
+        method: "post"
+      }
+    );
+
+    resp["chart"] = [
+      {
+        name: `Past ${30}-Day Rates`,
+        data: historical
+      },
+      { name: "Forecast", data: forecast.data }
+    ];
 
     return {
       statusCode: 200,
