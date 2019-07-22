@@ -18,6 +18,7 @@ async function handler(event, context) {
         Accept: "application/json"
       }
     });
+    
     console.log("fetched " + URL);
     console.log(response);
 
@@ -50,23 +51,26 @@ async function handler(event, context) {
       return acc;
     }, {});
 
-    var forecast = await axios.post(
-      "https://trendapi.org/forecast",
-      historical,
-      {
-        headers: {
-          Accept: "application/json"
-        }
-      }
-    );
-
     resp["chart"] = [
       {
-        name: `Past ${30}-Day Rates`,
+        name: `Past ${samples.length - 1}-Day Rates`,
         data: historical
       },
-      { name: "Forecast", data: forecast.data }
+     
     ];
+
+    try {
+      var forecast = await axios({
+        url: "https://trendapi.org/forecast",
+        method: "post",
+        headers: { Accept: "application/json" },
+        data: JSON.stringify(historical)
+      });
+      resp.chart.push({ name: "Forecast", data: forecast.data.series })
+    } catch (e) {
+      console.log(e)
+    }
+    
 
     return {
       statusCode: 200,
