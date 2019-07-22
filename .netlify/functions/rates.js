@@ -18,7 +18,11 @@ async function handler(event, context) {
         Accept: "application/json"
       }
     });
+    console.log("fetched " + URL);
+    console.log(response);
+    
     var data = response.rates;
+
     return {
       statusCode: 200,
       body: JSON.stringify({
