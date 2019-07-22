@@ -1,13 +1,13 @@
 import React from "react";
 
 function ZillowNav() {
-  const [data, setData] = React.useState({ hits: [] });
+  const [data, setData] = React.useState({});
   const [search, setSearch] = React.useState(false);
   React.useEffect(() => {
     const fetchData = async () => {
-      fetch("https://mortgageapi.zillow.com/getRates?partnerId=RD-RRVHPYZ", {
-        method: 'GET',
-        mode: 'no-cors'
+      fetch("./netlify/functions/rates", {
+        method: "GET",
+        mode: "no-cors"
       })
         .then(function(response) {
           return response.json();
@@ -15,14 +15,19 @@ function ZillowNav() {
         .then(function(myJson) {
           setData(myJson);
           setSearch(false);
+        })
+        .catch(function(err) {
+          setData({ error: err });
+          setSearch(false);
         });
     };
+
     if (search) {
       fetchData();
     }
   }, [search]);
 
-  
+  const { query, samples } = data;
 
   return (
     <header className="ph3 ph5-ns pt3 bb bt b--black-10 mb3">
@@ -36,7 +41,7 @@ function ZillowNav() {
           Search
         </button>
       </div>
-      {JSON.stringify(data)}
+      {query && samples && <div>{JSON.stringify(data)}</div>}
     </header>
   );
 }
