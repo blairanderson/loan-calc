@@ -1,23 +1,38 @@
-const axios = require("axios");
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.handler = handler;
 
-const { ZILLOW_KEY } = process.env;
+var axios = require("axios");
 
-export async function handler(event, context) {
+var ZILLOW_KEY = process.env.ZILLOW_KEY;
+
+var URL = "https://mortgageapi.zillow.com/getRates?partnerId=".concat(
+  ZILLOW_KEY
+);
+
+async function handler(event, context) {
   try {
-    const response = await axios.get(
-      `https://mortgageapi.zillow.com/getRates?partnerId=${ZILLOW_KEY}`,
-      { headers: { Accept: "application/json" } }
-    );
-    const data = response.rates;
+    var response = await axios.get(URL, {
+      headers: {
+        Accept: "application/json"
+      }
+    });
+    var data = response.rates;
     return {
       statusCode: 200,
-      body: JSON.stringify({ msg: data.default })
+      body: JSON.stringify({
+        msg: data.default
+      })
     };
   } catch (err) {
     console.log(err); // output to netlify function log
+
     return {
       statusCode: 500,
-      body: JSON.stringify({ msg: err.message }) // Could be a custom message or object i.e. JSON.stringify(err)
+      body: JSON.stringify({
+        msg: err.message
+      }) // Could be a custom message or object i.e. JSON.stringify(err)
     };
   }
 }
