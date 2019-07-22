@@ -22,10 +22,37 @@ async function handler(event, context) {
     console.log(response);
 
     var data = response.rates;
+    var resp = data.default;
+    var samples = data.default.samples;
+
+    var last = samples[samples.length - 1];
+
+    var totalAPR = 0;
+    var totalRATE = 0;
+    for (var i = 0; i < samples.length; i++) {
+      totalAPR += samples[i].apr;
+      totalRATE += samples[i].rate;
+    }
+    var averageAPR = (totalAPR / samples.length).toFixed(3);
+    var averageRATE = (totalRATE / samples.length).toFixed(3);
+
+    resp['rates'] = [
+      { text: "Current Rate", rate: last.rate, apr: last.apr },
+      {
+        text: `${samples.length - 1} Day Average`,
+        rate: averageRATE,
+        apr: averageAPR
+      }
+    ];
+
+    resp['chart'] = samples.reduce(function(acc, { time, rate }, ind, src) {
+      acc[time] = rate;
+      return acc;
+    }, {});
 
     return {
       statusCode: 200,
-      body: JSON.stringify(data.default)
+      body: JSON.stringify(resp)
     };
   } catch (err) {
     console.log(err); // output to netlify function log
