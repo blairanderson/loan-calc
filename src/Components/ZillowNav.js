@@ -6,34 +6,15 @@ const { ZILLOW_KEY } = process.env;
 
 const className = "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc";
 function Rates(props) {
-  const { samples } = props;
+  const { rates, chart, duration, amount } = props;
+  const first = chart[0].data;
+  rates.forEach(function({ text, rate, apr }) {
+    chart.push({
+      name: text,
+      data: first.fill(parseFloat(apr))
+    });
+  });
 
-  const last = samples[samples.length - 1];
-
-  let totalAPR = 0;
-  let totalRATE = 0;
-  for (var i = 0; i < samples.length; i++) {
-    totalAPR += samples[i].apr;
-    totalRATE += samples[i].rate;
-  }
-  const averageAPR = (totalAPR / samples.length).toFixed(3);
-  const averageRATE = (totalRATE / samples.length).toFixed(3);
-
-  const rates = [
-    { text: "Current Rate", rate: last.rate, apr: last.apr },
-    {
-      text: `${samples.length - 1} Day Average`,
-      rate: averageRATE,
-      apr: averageAPR
-    }
-  ];
-
-  const chartData = samples.reduce(function(acc, { time, rate }, ind, src) {
-    acc[time] = rate;
-    return acc;
-  }, {});
-
-  const { duration, amount } = props;
   return (
     <header className="ph0 pt3 bt b--black-10 mb3">
       <div className="mw9 center">
@@ -49,7 +30,7 @@ function Rates(props) {
       </div>
       <ZillowShoutOut />
       <LineChart
-        data={chartData}
+        data={chart}
         width="100%"
         height="125px"
         min={3.6}
@@ -83,9 +64,13 @@ function ZillowNav(props) {
     // }
   }, []);
 
-  const { query, samples } = data;
+  const { rates, chart } = data;
 
-  return query && samples ? <Rates {...props} samples={samples} /> : "";
+  return rates && chart ? (
+    <Rates {...props}  rates={data.rates} chart={data.chart} />
+  ) : (
+    ""
+  );
 }
 
 function ZillowShoutOut() {

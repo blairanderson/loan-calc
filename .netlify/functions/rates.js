@@ -23,8 +23,8 @@ async function handler(event, context) {
     console.log(response);
 
     var data = response.data.rates;
-    var resp = data.default;
     var samples = data.default.samples;
+    var resp = {};
 
     var last = samples[samples.length - 1];
 
@@ -55,8 +55,7 @@ async function handler(event, context) {
       {
         name: `Past ${samples.length - 1}-Day Rates`,
         data: historical
-      },
-     
+      }
     ];
 
     try {
@@ -64,13 +63,12 @@ async function handler(event, context) {
         url: "https://trendapi.org/forecast",
         method: "post",
         headers: { Accept: "application/json" },
-        data: {series: historical, count: 14}
+        data: { series: historical, count: 14 }
       });
-      resp.chart.push({ name: "Forecast", data: forecast.data.forecast })
+      resp.chart.push({ name: "Forecast", data: forecast.data.forecast });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-    
 
     return {
       statusCode: 200,
