@@ -2,7 +2,7 @@ import React from "react";
 
 const { ZILLOW_KEY } = process.env;
 
-function ZillowNav() {
+function ZillowNav(props) {
   const [data, setData] = React.useState({});
   React.useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +31,7 @@ function ZillowNav() {
 
   const { query, samples } = data;
 
-  return query && samples ? <Rates samples={samples} /> : "";
+  return query && samples ? <Rates {...props} samples={samples} /> : "";
 }
 
 export default ZillowNav;
@@ -47,12 +47,16 @@ function Rates(props) {
     totalAPR += samples[i].apr;
     totalRATE += samples[i].rate;
   }
-  const averageAPR = (totalAPR / samples.length).toFixed(2);
-  const averageRATE = (totalRATE / samples.length).toFixed(2);
+  const averageAPR = (totalAPR / samples.length).toFixed(3);
+  const averageRATE = (totalRATE / samples.length).toFixed(3);
 
   const rates = [
     { text: "Current Rate", rate: last.rate, apr: last.apr },
-    { text: `${samples.length-1} Day Average`, rate: averageRATE, apr: averageAPR }
+    {
+      text: `${samples.length - 1} Day Average`,
+      rate: averageRATE,
+      apr: averageAPR
+    }
   ];
 
   return (
@@ -65,14 +69,15 @@ function Rates(props) {
       <div className="mw9 center">
         {rates.map(function({ text, rate, apr }) {
           return (
-            <span
+            <a
+              href={`?interestRate=${apr}&duration=${props.duration}&amount=${props.amount}`}
               className={
                 "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc"
               }
             >
               {text}: {rate}%
               <br />({apr}% APR)
-            </span>
+            </a>
           );
         })}
       </div>

@@ -47,7 +47,10 @@ function App() {
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <AppTitle {...{ amount, duration, interestRate }} />
-      <NavSuggestions onClick={NavClick} />
+      <NavSuggestions
+        onClick={NavClick}
+        {...{ amount, duration, interestRate }}
+      />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput
