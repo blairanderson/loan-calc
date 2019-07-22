@@ -7,16 +7,20 @@ const { ZILLOW_KEY } = process.env;
 const className = "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc";
 function Rates(props) {
   const { rates, chart, duration, amount } = props;
-  const first = chart[0].data;
-  rates.forEach(function({ text, rate, apr }) {
-    const data = {};
-    const level = parseFloat(apr);
-    Object.keys(first).forEach(function(key) {
-      data[key] = level;
-    });
-    chart.push({ name: text, data: data });
-  });
+  // const total = Object.assign({}, )
+  // const first = chart[0].data;
+  // rates.forEach(function({ text, rate, apr }) {
+  //   const data = {};
+  //   const level = parseFloat(apr);
+  //   Object.keys(first).forEach(function(key) {
+  //     data[key] = level;
+  //   });
+  //   chart.push({ name: text, data: data });
+  // });
+  // https://github.com/ankane/blazer/blob/c4fc09f7720dfa5187fbc1de81b6bcfaebda3c4f/app/views/blazer/queries/run.html.erb#L70
 
+
+  //https://github.com/ankane/blazer/blob/c4fc09f7720dfa5187fbc1de81b6bcfaebda3c4f/app/views/blazer/queries/run.html.erb#L72
   return (
     <header className="ph0 pt3 bt b--black-10 mb3">
       <div className="mw9 center">
@@ -34,7 +38,7 @@ function Rates(props) {
       <LineChart
         data={chart}
         width="100%"
-        height="125px"
+        height="150px"
         min={3.6}
         max={4.25}
       />
