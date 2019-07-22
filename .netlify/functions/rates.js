@@ -64,7 +64,7 @@ async function handler(event, context) {
         url: "https://trendapi.org/forecast",
         method: "post",
         headers: { Accept: "application/json" },
-        data: JSON.stringify({series: historical, count: 14})
+        data: {series: historical, count: 14}
       });
       resp.chart.push({ name: "Forecast", data: forecast.data.forecast })
     } catch (e) {
