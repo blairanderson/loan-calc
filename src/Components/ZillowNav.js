@@ -1,41 +1,10 @@
 import React from "react";
+import { LineChart } from "react-chartkick";
+import "chart.js";
 
 const { ZILLOW_KEY } = process.env;
 
-function ZillowNav(props) {
-  const [data, setData] = React.useState({});
-  React.useEffect(() => {
-    const fetchData = async () => {
-      fetch(".netlify/functions/rates", {
-        method: "GET",
-        mode: "no-cors"
-      })
-        .then(function(response) {
-          console.log(response);
-          return response.json();
-        })
-        .then(function(myJson) {
-          setData(myJson);
-        })
-        .catch(function(err) {
-          setData({ error: err });
-        });
-    };
-
-    if (ZILLOW_KEY) {
-      fetchData();
-    } else {
-      setData(TEST);
-    }
-  }, []);
-
-  const { query, samples } = data;
-
-  return query && samples ? <Rates {...props} samples={samples} /> : "";
-}
-
-export default ZillowNav;
-
+const className = "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc";
 function Rates(props) {
   const { samples } = props;
 
@@ -59,31 +28,84 @@ function Rates(props) {
     }
   ];
 
+  const chartData = samples.reduce(function(acc, { time, rate }, ind, src) {
+    acc[time] = rate;
+    return acc;
+  }, {});
+
+  const { duration, amount } = props;
   return (
-    <header className="ph3 ph5-ns pt3 bt b--black-10 mb3">
-      <small>
-        See more{" "}
-        <a href="http://www.zillow.com/mortgage-rates/">mortgage rates</a> on
-        Zillow
-      </small>
+    <header className="ph0 pt3 bt b--black-10 mb3">
       <div className="mw9 center">
         {rates.map(function({ text, rate, apr }) {
+          const href = `?interestRate=${apr}&duration=${duration}&amount=${amount}`;
           return (
-            <a
-              href={`?interestRate=${apr}&duration=${props.duration}&amount=${props.amount}`}
-              className={
-                "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc"
-              }
-            >
+            <a key={href} href={href} className={className}>
               {text}: {rate}%
               <br />({apr}% APR)
             </a>
           );
         })}
       </div>
+      <ZillowShoutOut />
+      <LineChart
+        data={chartData}
+        width="100%"
+        height="125px"
+        min={3.6}
+        max={4.25}
+      />
     </header>
   );
 }
+
+function ZillowNav(props) {
+  const [data, setData] = React.useState({});
+  React.useEffect(() => {
+    const fetchData = async () => {
+      fetch(".netlify/functions/rates", {
+        method: "GET",
+        mode: "no-cors"
+      })
+        .then(function(response) {
+          console.log(response);
+          return response.json();
+        })
+        .then(function(myJson) {
+          setData(myJson);
+        })
+        .catch(function(err) {
+          setData({ error: err });
+        });
+    };
+
+
+    fetchData();
+    // if (ZILLOW_KEY) {
+    //   fetchData();
+    // } else {
+    //   setData(TEST);
+    // }
+  }, []);
+
+  const { query, samples } = data;
+
+  return query && samples ? <Rates {...props} samples={samples} /> : "";
+}
+
+function ZillowShoutOut() {
+  return (
+    <small className="bg-blue near-white br2 ph3 pv1 dib">
+      See more{" "}
+      <a className="white" href="http://www.zillow.com/mortgage-rates/">
+        <strong>mortgage rates</strong>
+      </a>{" "}
+      on Zillow
+    </small>
+  );
+}
+
+export default ZillowNav;
 
 const TEST = {
   query: {

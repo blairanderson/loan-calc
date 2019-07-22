@@ -7,8 +7,10 @@
   "dependencies": {
     "@rehooks/document-title": "1.0.1",
     "axios": "0.19.0",
+    "chart.js": "2.8.0",
     "query-string": "6.4.0",
     "react": "16.8.3",
+    "react-chartkick": "0.3.2",
     "react-dom": "16.8.3",
     "react-scripts": "2.1.8",
     "tachyons": "4.11.1"
