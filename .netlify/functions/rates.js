@@ -50,14 +50,13 @@ async function handler(event, context) {
       return acc;
     }, {});
 
-    var forecast = await axios.get(
+    var forecast = await axios.post(
       "https://trendapi.org/forecast",
       historical,
       {
         headers: {
           Accept: "application/json"
-        },
-        method: "post"
+        }
       }
     );
 
