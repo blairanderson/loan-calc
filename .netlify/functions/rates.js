@@ -20,14 +20,12 @@ async function handler(event, context) {
     });
     console.log("fetched " + URL);
     console.log(response);
-    
+
     var data = response.rates;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({
-        msg: data.default
-      })
+      body: JSON.stringify(data.default)
     };
   } catch (err) {
     console.log(err); // output to netlify function log

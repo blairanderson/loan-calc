@@ -68,7 +68,6 @@ function ZillowNav(props) {
         mode: "no-cors"
       })
         .then(function(response) {
-          console.log(response);
           return response.json();
         })
         .then(function(myJson) {
@@ -78,7 +77,6 @@ function ZillowNav(props) {
           setData({ error: err });
         });
     };
-
 
     fetchData();
     // if (ZILLOW_KEY) {
