@@ -21,7 +21,7 @@ async function handler(event, context) {
     console.log("fetched " + URL);
     console.log(response);
 
-    var data = response.rates;
+    var data = response.data.rates;
     var resp = data.default;
     var samples = data.default.samples;
 
