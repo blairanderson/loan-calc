@@ -18,7 +18,7 @@ async function handler(event, context) {
         Accept: "application/json"
       }
     });
-    
+
     console.log("fetched " + URL);
     console.log(response);
 
@@ -64,7 +64,7 @@ async function handler(event, context) {
         url: "https://trendapi.org/forecast",
         method: "post",
         headers: { Accept: "application/json" },
-        data: JSON.stringify(historical)
+        data: JSON.stringify({series: historical, count: 14})
       });
       resp.chart.push({ name: "Forecast", data: forecast.data.series })
     } catch (e) {
