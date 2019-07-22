@@ -66,7 +66,7 @@ async function handler(event, context) {
         headers: { Accept: "application/json" },
         data: JSON.stringify({series: historical, count: 14})
       });
-      resp.chart.push({ name: "Forecast", data: forecast.data.series })
+      resp.chart.push({ name: "Forecast", data: forecast.data.forecast })
     } catch (e) {
       console.log(e)
     }
