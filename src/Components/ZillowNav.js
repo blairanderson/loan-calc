@@ -63,10 +63,7 @@ function ZillowNav(props) {
   const [data, setData] = React.useState({});
   React.useEffect(() => {
     const fetchData = async () => {
-      fetch(".netlify/functions/rates", {
-        method: "GET",
-        mode: "no-cors"
-      })
+      fetch(".netlify/functions/rates")
         .then(function(response) {
           return response.json();
         })
