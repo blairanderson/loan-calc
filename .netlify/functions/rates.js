@@ -1,8 +1,9 @@
 import axios from "axios";
+const { ZILLOW_KEY } = process.env;
 export async function handler(event, context) {
   try {
     const response = await axios.get(
-      "https://mortgageapi.zillow.com/getRates?partnerId=RD-RRVHPYZ",
+      `https://mortgageapi.zillow.com/getRates?partnerId=${ZILLOW_KEY}`,
       { headers: { Accept: "application/json" } }
     );
     const data = response.rates;
