@@ -5,11 +5,12 @@ function ZillowNav() {
   const [search, setSearch] = React.useState(false);
   React.useEffect(() => {
     const fetchData = async () => {
-      fetch("./netlify/functions/rates", {
+      fetch(".netlify/functions/rates", {
         method: "GET",
         mode: "no-cors"
       })
         .then(function(response) {
+          console.log(response)
           return response.json();
         })
         .then(function(myJson) {

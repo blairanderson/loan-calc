@@ -1,5 +1,7 @@
-import axios from "axios";
+const axios = require("axios");
+
 const { ZILLOW_KEY } = process.env;
+
 export async function handler(event, context) {
   try {
     const response = await axios.get(
