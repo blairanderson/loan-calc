@@ -79,16 +79,11 @@ async function handler(event, context) {
     // wait until afer the forecast to separate this current date
     delete historical[last.time];
 
-    var allValuesForMaxMin = resp["chart"].reduce(function(
-      accum,
-      { name, data }
-    ) {
-      accum.concat(Object.values(data));
-      return accum;
-    },
-    []);
+    var allValuesForMaxMin = resp["chart"].reduce(function(acc, obj) {
+      return acc.concat(Object.values(obj.data));
+    }, []);
 
-    var diff = 0.2;
+    var diff = standardDeviation(allValuesForMaxMin);
     resp["maximum"] = Math.max.apply(null, allValuesForMaxMin) + diff;
     resp["minimum"] = Math.min.apply(null, allValuesForMaxMin) - diff;
 
@@ -106,4 +101,28 @@ async function handler(event, context) {
       }) // Could be a custom message or object i.e. JSON.stringify(err)
     };
   }
+}
+
+function standardDeviation(values) {
+  var avg = average(values);
+
+  var squareDiffs = values.map(function(value) {
+    var diff = value - avg;
+    var sqrDiff = diff * diff;
+    return sqrDiff;
+  });
+
+  var avgSquareDiff = average(squareDiffs);
+
+  var stdDev = Math.sqrt(avgSquareDiff);
+  return stdDev;
+}
+
+function average(data) {
+  var sum = data.reduce(function(sum, value) {
+    return sum + value;
+  }, 0);
+
+  var avg = sum / data.length;
+  return avg;
 }
