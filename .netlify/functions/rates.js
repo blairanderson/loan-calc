@@ -25,10 +25,10 @@ async function handler(event, context) {
     var data = response.data.rates;
     var samples = data.default.samples;
     var resp = {};
-
-    var last = samples[samples.length - 1];
+    var length = samples.length;
+    var last = samples[length - 1];
     var lastChartData = {};
-    lastChartData[last.time] = last.apr;
+    lastChartData[last.time] = last.rate;
 
     var totalAPR = 0;
     var totalRATE = 0;
@@ -75,6 +75,9 @@ async function handler(event, context) {
     } catch (e) {
       console.log(e);
     }
+
+    // wait until afer the forecast to separate this current date
+    delete historical[last.time];
 
     var allValuesForMaxMin = resp["chart"].reduce(function(
       accum,
