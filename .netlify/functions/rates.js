@@ -63,24 +63,25 @@ async function handler(event, context) {
         headers: { Accept: "application/json" },
         data: { series: historical, count: 7 }
       });
+      console.log("fetched " + "https://trendapi.org/forecast");
+      console.log(forecast.data);
       resp.chart.push({ name: "7-Day Forecast", data: forecast.data.forecast });
-    } catch (e) {
-      console.log(e);
+    } catch (err) {
+      console.error(err);
     }
 
     // wait until afer the forecast to separate this current date
     delete historical[lastTime];
 
-    resp["chart"] = [
-      {
-        name: `Past ${samples.length - 1}-Day Rates`,
-        data: historical
-      },
-      {
-        name: "Current Rate",
-        data: lastChartData
-      }
-    ];
+    resp["chart"].unshift({
+      name: "Current Rate",
+      data: lastChartData
+    });
+
+    resp["chart"].unshift({
+      name: `Past ${samples.length - 1}-Day Rates`,
+      data: historical
+    });
 
     var allValuesForMaxMin = resp["chart"].reduce(function(acc, obj) {
       return acc.concat(Object.values(obj.data));
