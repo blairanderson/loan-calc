@@ -35,7 +35,7 @@ function Rates(props) {
           );
         })}
       </div>
-      <LineChart data={chart} width="100%" height="150px" min={min} max={max} />
+      <LineChart data={chart} width="100%" height="200px" min={min} max={max} />
       <ZillowShoutOut />
       {chart.length > 2 && <TrendShoutOut />}
     </header>
