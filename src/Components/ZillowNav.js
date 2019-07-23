@@ -7,6 +7,8 @@ const { ZILLOW_KEY } = process.env;
 const className = "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc";
 function Rates(props) {
   const { rates, chart, duration, amount } = props;
+  const max = parseFloat(props.maximum || 4.25);
+  const min = parseFloat(props.minimum || 3.6);
   // const total = Object.assign({}, )
   // const first = chart[0].data;
   // rates.forEach(function({ text, rate, apr }) {
@@ -34,13 +36,7 @@ function Rates(props) {
         })}
       </div>
       <ZillowShoutOut />
-      <LineChart
-        data={chart}
-        width="100%"
-        height="150px"
-        min={3.6}
-        max={4.25}
-      />
+      <LineChart data={chart} width="100%" height="150px" min={min} max={max} />
       {chart.length > 2 && (
         <small>
           TBATS Forecast by <a href="https://trendapi.org">TrendApi.org</a>
