@@ -28,7 +28,7 @@ async function handler(event, context) {
     var length = samples.length;
     var last = samples[length - 1];
     var lastChartData = {};
-    lastChartData[last.time] = last.rate;
+    lastChartData[last.time.split("T")[0]] = last.rate;
 
     var totalAPR = 0;
     var totalRATE = 0;
@@ -49,7 +49,7 @@ async function handler(event, context) {
     ];
 
     var historical = samples.reduce(function(acc, { time, rate }, ind, src) {
-      acc[time] = rate;
+      acc[time.split("T")[0]] = rate;
       return acc;
     }, {});
 

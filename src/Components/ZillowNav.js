@@ -19,7 +19,6 @@ function Rates(props) {
   // });
   // https://github.com/ankane/blazer/blob/c4fc09f7720dfa5187fbc1de81b6bcfaebda3c4f/app/views/blazer/queries/run.html.erb#L70
 
-
   //https://github.com/ankane/blazer/blob/c4fc09f7720dfa5187fbc1de81b6bcfaebda3c4f/app/views/blazer/queries/run.html.erb#L72
   return (
     <header className="ph0 pt3 bt b--black-10 mb3">
@@ -42,6 +41,11 @@ function Rates(props) {
         min={3.6}
         max={4.25}
       />
+      {chart.length > 2 && (
+        <small>
+          TBATS Forecast by <a href="https://trendapi.org">TrendApi.org</a>
+        </small>
+      )}
     </header>
   );
 }

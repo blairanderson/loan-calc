@@ -9,10 +9,10 @@ import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
 import Calculator from "./Calculator";
-import { dollarify } from './utils/dollarify';
+import { dollarify } from "./utils/dollarify";
 import queryString from "query-string";
 import Sharing from "./Components/Sharing";
-import ZillowNav from './Components/ZillowNav'
+import ZillowNav from "./Components/ZillowNav";
 import Footer from "./Components/Footer";
 
 const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
@@ -48,8 +48,7 @@ function App() {
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <AppTitle {...{ amount, duration, interestRate }} />
-      <ZillowNav onClick={NavClick}
-        {...{ amount, duration, interestRate }} />
+      <ZillowNav onClick={NavClick} {...{ amount, duration, interestRate }} />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput
