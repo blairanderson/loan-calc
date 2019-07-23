@@ -35,13 +35,9 @@ function Rates(props) {
           );
         })}
       </div>
-      <ZillowShoutOut />
       <LineChart data={chart} width="100%" height="150px" min={min} max={max} />
-      {chart.length > 2 && (
-        <small>
-          TBATS Forecast by <a href="https://trendapi.org">TrendApi.org</a>
-        </small>
-      )}
+      <ZillowShoutOut />
+      {chart.length > 2 && <TrendShoutOut />}
     </header>
   );
 }
@@ -70,10 +66,10 @@ function ZillowNav(props) {
     // }
   }, []);
 
-  const { rates, chart } = data;
+  const { rates, chart, maximum, minimum } = data;
 
   return rates && chart ? (
-    <Rates {...props} rates={data.rates} chart={data.chart} />
+    <Rates {...props} {...{ rates, chart, maximum, minimum }} />
   ) : (
     ""
   );
@@ -81,12 +77,23 @@ function ZillowNav(props) {
 
 function ZillowShoutOut() {
   return (
-    <small className="bg-blue near-white br2 ph3 pv1 dib">
+    <small className="bg-blue mh3 near-white br2 ph3 pv1 dib">
       See more{" "}
       <a className="white" href="http://www.zillow.com/mortgage-rates/">
         <strong>mortgage rates</strong>
       </a>{" "}
       on Zillow
+    </small>
+  );
+}
+
+function TrendShoutOut() {
+  return (
+    <small className="bg-green mh3 near-white br2 ph3 pv1 dib">
+      TBATS Forecast by{" "}
+      <a className="white" href="http://trendapi.org/">
+        <strong>TrendApi.org</strong>
+      </a>
     </small>
   );
 }

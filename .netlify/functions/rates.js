@@ -20,15 +20,16 @@ async function handler(event, context) {
     });
 
     console.log("fetched " + URL);
-    console.log(response);
+    console.log(response.data);
 
     var data = response.data.rates;
     var samples = data.default.samples;
     var resp = {};
     var length = samples.length;
     var last = samples[length - 1];
+    var lastTime = last.time.toString().split("T")[0];
     var lastChartData = {};
-    lastChartData[last.time.split("T")[0]] = last.rate;
+    lastChartData[lastTime] = last.rate;
 
     var totalAPR = 0;
     var totalRATE = 0;
@@ -53,16 +54,7 @@ async function handler(event, context) {
       return acc;
     }, {});
 
-    resp["chart"] = [
-      {
-        name: `Past ${samples.length - 1}-Day Rates`,
-        data: historical
-      },
-      {
-        name: "Current Rate",
-        data: lastChartData
-      }
-    ];
+    resp["chart"] = [];
 
     try {
       var forecast = await axios({
@@ -77,15 +69,31 @@ async function handler(event, context) {
     }
 
     // wait until afer the forecast to separate this current date
-    delete historical[last.time];
+    delete historical[lastTime];
+
+    resp["chart"] = [
+      {
+        name: `Past ${samples.length - 1}-Day Rates`,
+        data: historical
+      },
+      {
+        name: "Current Rate",
+        data: lastChartData
+      }
+    ];
 
     var allValuesForMaxMin = resp["chart"].reduce(function(acc, obj) {
       return acc.concat(Object.values(obj.data));
     }, []);
 
     var diff = standardDeviation(allValuesForMaxMin);
+
     resp["maximum"] = Math.max.apply(null, allValuesForMaxMin) + diff;
     resp["minimum"] = Math.min.apply(null, allValuesForMaxMin) - diff;
+
+    ["maximum", "minimum"].forEach(function(attr) {
+      resp[attr] = resp[attr].toFixed(2);
+    });
 
     return {
       statusCode: 200,
