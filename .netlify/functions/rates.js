@@ -60,7 +60,7 @@ async function handler(event, context) {
       },
       {
         name: "Current Rate",
-        data: [lastChartData]
+        data: lastChartData
       }
     ];
 
