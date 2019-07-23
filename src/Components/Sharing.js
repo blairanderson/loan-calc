@@ -1,6 +1,6 @@
 import React from "react";
 import queryString from "query-string";
-import debounce from "./debounce";
+import debounce from "../utils/debounce";
 const DELAY_PUSH_STATE = 300;
 
 function getNewUrl(props) {

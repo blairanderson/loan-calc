@@ -8,10 +8,11 @@ import NumberInput from "./NumberInput";
 import DurationInput from "./DurationInput";
 import PercentInput from "./PercentInput";
 import ReadOnlyNumberInput from "./ReadOnlyNumberInput";
-import Calculator, { dollarify } from "./Calculator";
-import NavSuggestions from "./NavSuggestions";
+import Calculator from "./Calculator";
+import { dollarify } from './utils/dollarify';
 import queryString from "query-string";
-import Sharing from "./sharing";
+import Sharing from "./Components/Sharing";
+import ZillowNav from './Components/ZillowNav'
 import Footer from "./Components/Footer";
 
 const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
@@ -20,15 +21,15 @@ function App() {
   const parsed = queryString.parse(window.location.search);
 
   const [amount, setAmount] = React.useState(
-    parseFloat(parsed.amount || 100000)
+    parseFloat(parsed.amount || 313000)
   );
 
   const [duration, setDuration] = React.useState(
-    parseInt(parsed.duration || 120, 10)
+    parseInt(parsed.duration || 360, 10)
   );
 
   const [interestRate, setInterestRate] = React.useState(
-    parseFloat(parsed.interestRate || 2.5)
+    parseFloat(parsed.interestRate || 3.875)
   );
 
   const { payments, total, monthlyRate, interest, excel } = Calculator({
@@ -47,10 +48,8 @@ function App() {
   return (
     <div className="mw8 tc center w-100 system-sans-serif">
       <AppTitle {...{ amount, duration, interestRate }} />
-      <NavSuggestions
-        onClick={NavClick}
-        {...{ amount, duration, interestRate }}
-      />
+      <ZillowNav onClick={NavClick}
+        {...{ amount, duration, interestRate }} />
       <div className="cf ">
         <div className="fl w-50">
           <NumberInput

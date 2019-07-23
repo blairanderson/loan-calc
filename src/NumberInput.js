@@ -1,5 +1,5 @@
 import React from "react";
-import { dollarify } from "./Calculator";
+import { dollarify } from "./utils/dollarify";
 
 function NumberInput(props) {
   function onChange(e) {

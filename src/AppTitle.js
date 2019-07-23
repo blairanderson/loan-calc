@@ -1,6 +1,6 @@
 import React from "react";
 import useDocumentTitle from "@rehooks/document-title";
-import { dollarify } from "./Calculator";
+import { dollarify } from "./utils/dollarify";
 
 function AppTitle(props) {
   const { amount, duration, interestRate } = props;
@@ -8,7 +8,7 @@ function AppTitle(props) {
   const subtitle = `${dollarify(
     amount,
     true
-  )} Loan Amortization @ ${interestRate}%`;
+  )} Loan @ ${interestRate}%`;
 
   useDocumentTitle(`${subtitle} | ${title}`);
 
@@ -18,7 +18,7 @@ function AppTitle(props) {
       <h2 className="nowrap">
         {subtitle}
         <br />
-        Over {duration}-Month Duration
+        Amortized Over {duration}-Months
       </h2>
     </div>
   );
