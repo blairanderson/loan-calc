@@ -27,6 +27,8 @@ async function handler(event, context) {
     var resp = {};
 
     var last = samples[samples.length - 1];
+    var lastChartData = {};
+    lastChartData[last.time] = last.apr;
 
     var totalAPR = 0;
     var totalRATE = 0;
@@ -55,6 +57,10 @@ async function handler(event, context) {
       {
         name: `Past ${samples.length - 1}-Day Rates`,
         data: historical
+      },
+      {
+        name: "Current Rate",
+        data: [lastChartData]
       }
     ];
 
@@ -69,6 +75,19 @@ async function handler(event, context) {
     } catch (e) {
       console.log(e);
     }
+
+    var allValuesForMaxMin = resp["chart"].reduce(function(
+      accum,
+      { name, data }
+    ) {
+      accum.concat(Object.values(data));
+      return accum;
+    },
+    []);
+
+    var diff = 0.2;
+    resp["maximum"] = Math.max.apply(null, allValuesForMaxMin) + diff;
+    resp["minimum"] = Math.min.apply(null, allValuesForMaxMin) - diff;
 
     return {
       statusCode: 200,
