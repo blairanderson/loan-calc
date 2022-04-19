@@ -19,7 +19,7 @@ function App() {
   const parsed = queryString.parse(window.location.search);
 
   const [amount, setAmount] = React.useState(
-    parseFloat(parsed.amount || 313000)
+    parseFloat(parsed.amount || 891250)
   );
 
   const [duration, setDuration] = React.useState(

@@ -5,7 +5,6 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@rehooks/document-title": "1.0.2",
     "axios": "0.26.1",
     "chart.js": "3.7.1",
     "query-string": "7.1.1",
@@ -13,7 +12,7 @@
     "react-chartkick": "0.5.2",
     "react-dom": "18.0.0",
     "react-scripts": "5.0.1",
-    "tachyons": "4.11.1"
+    "tachyons": "4.12.0"
   },
   "devDependencies": {
     "typescript": "3.3.3"
