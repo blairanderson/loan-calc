@@ -5,7 +5,7 @@ function PercentInput(props) {
     props.onChange(
       props.type === "float"
         ? parseFloat(e.target.value)
-        : parseInt(e.target.value)
+        : parseInt(e.target.value, 10)
     );
   }
 
@@ -28,7 +28,7 @@ function PercentInput(props) {
               value={props.value}
               className={props.className}
               onChange={onChange}
-              onBlur={e => {
+              onBlur={(e) => {
                 setFocus(false);
               }}
             />
@@ -36,8 +36,9 @@ function PercentInput(props) {
             <input
               type="text"
               className={props.className}
-              value={`${props.value}%`}
-              onFocus={e => {
+              defaultValue={`${props.value}%`}
+              readOnly={true}
+              onFocus={(e) => {
                 setFocus(true);
               }}
             />

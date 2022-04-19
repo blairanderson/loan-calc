@@ -44,11 +44,11 @@ function Sharing(props) {
         href={`https://facebook.com/sharer/sharer.php?u=${encoded}`}
         target="_blank"
         rel="noopener noreferrer"
-        ariaLabel="Facebook"
+        aria-label="Facebook"
       >
         <div className="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
           <div
-            ariaHidden="true"
+            aria-hidden="true"
             className="resp-sharing-button__icon resp-sharing-button__icon--circle"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

@@ -5,14 +5,14 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
-    "@rehooks/document-title": "1.0.1",
-    "axios": "0.19.0",
-    "chart.js": "2.8.0",
-    "query-string": "6.4.0",
-    "react": "16.8.3",
-    "react-chartkick": "0.3.2",
-    "react-dom": "16.8.3",
-    "react-scripts": "2.1.8",
+    "@rehooks/document-title": "1.0.2",
+    "axios": "0.26.1",
+    "chart.js": "3.7.1",
+    "query-string": "7.1.1",
+    "react": "18.0.0",
+    "react-chartkick": "0.5.2",
+    "react-dom": "18.0.0",
+    "react-scripts": "5.0.1",
     "tachyons": "4.11.1"
   },
   "devDependencies": {
