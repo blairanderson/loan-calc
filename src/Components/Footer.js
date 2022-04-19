@@ -6,12 +6,11 @@ function Footer() {
       <p className="f6">
         <span className="dib mr4 mr5-ns">
           ©{new Date().getFullYear()}{" "}
-          <a href="https://www.blairanderson.co/">Blair Anderson</a>
+          <a href="https://www.blandersoft.com">Blair Anderson</a>
         </span>
 
         <a
           className="link white-80 hover-green"
-          target="_blank"
           href="https://github.com/blairanderson/loan-calc/issues/new?title=Suggestion+or+Idea"
         >
           Suggestions or Ideas

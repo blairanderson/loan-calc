@@ -43,6 +43,7 @@ function Sharing(props) {
         className="resp-sharing-button__link"
         href={`https://facebook.com/sharer/sharer.php?u=${encoded}`}
         target="_blank"
+        rel="noopener noreferrer"
         ariaLabel="Facebook"
       >
         <div className="resp-sharing-button resp-sharing-button--facebook resp-sharing-button--medium">
@@ -63,6 +64,7 @@ function Sharing(props) {
         className="resp-sharing-button__link"
         href={`https://twitter.com/intent/tweet/?${twitterparams}`}
         target="_blank"
+        rel="noopener noreferrer"
         aria-label="Twitter"
       >
         <div className="resp-sharing-button resp-sharing-button--twitter resp-sharing-button--medium">
