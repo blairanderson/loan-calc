@@ -1,6 +1,7 @@
 {
   "name": "open-source-loan-calculator",
   "version": "1.0.0",
+  "license": "MIT",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
