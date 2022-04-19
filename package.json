@@ -1,6 +1,6 @@
 {
   "name": "open-source-loan-calculator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "",
   "keywords": [],
@@ -14,9 +14,6 @@
     "react-dom": "18.0.0",
     "react-scripts": "5.0.1",
     "tachyons": "4.12.0"
-  },
-  "devDependencies": {
-    "typescript": "3.3.3"
   },
   "scripts": {
     "start": "react-scripts start",
