@@ -11,6 +11,7 @@ function Calculator(props) {
     var remainingPrincipal = amount;
 
     payments[0] = {
+      id: 0,
       index: 0,
       amount: 0,
       principal: 0,
@@ -22,6 +23,7 @@ function Calculator(props) {
       var interest = remainingPrincipal * r;
 
       payments[i] = {
+        id: `id-${i}`,
         index: i,
         amount: monthlyRate,
         principal: monthlyRate - interest,

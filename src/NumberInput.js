@@ -6,7 +6,7 @@ function NumberInput(props) {
     props.onChange(
       props.type === "float"
         ? parseFloat(e.target.value)
-        : parseInt(e.target.value)
+        : parseInt(e.target.value, 10)
     );
   }
   const [focus, setFocus] = React.useState(false);
@@ -28,8 +28,9 @@ function NumberInput(props) {
               step={step}
               className={props.className}
               value={props.value}
+              max={rangeMax}
               onChange={onChange}
-              onBlur={e => {
+              onBlur={(e) => {
                 setFocus(false);
               }}
             />
@@ -38,8 +39,8 @@ function NumberInput(props) {
               type="text"
               className={props.className}
               readOnly={true}
-              value={dollarify(props.value)}
-              onFocus={e => {
+              defaultValue={dollarify(props.value)}
+              onFocus={(e) => {
                 setFocus(true);
               }}
             />

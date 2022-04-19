@@ -119,7 +119,8 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {payments.map(function({
+            {payments.map(function ({
+              id,
               index,
               amount,
               principal,
@@ -127,7 +128,7 @@ function App() {
               remainingAmount
             }) {
               return (
-                <tr className="striped--near-white">
+                <tr key={id} className="striped--near-white">
                   <td className="tl bb b--black-50">{index}</td>
                   <td className="bb b--black-50">{dollarify(amount)}</td>
                   <td className="bb b--black-50">{dollarify(principal)}</td>
