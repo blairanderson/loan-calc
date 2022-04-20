@@ -27,7 +27,7 @@ function App() {
   );
 
   const [interestRate, setInterestRate] = React.useState(
-    parseFloat(parsed.interestRate || 3.875)
+    parseFloat(parsed.interestRate || 4.975)
   );
 
   const { payments, total, monthlyRate, interest, excel } = Calculator({
