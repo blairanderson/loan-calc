@@ -1,6 +1,6 @@
 import React from "react";
 import { LineChart } from "react-chartkick";
-import "chart.js";
+import 'chartkick/chart.js';
 
 const className = "f6 fw6 b dib mh3 mb0 pb1 link hover-blue black-70 ttc";
 function Rates(props) {
