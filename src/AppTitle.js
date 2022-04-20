@@ -10,7 +10,7 @@ function AppTitle(props) {
 
   return (
     <div>
-      <h1>{title}</h1>
+      <h1><a href="/">{title}</a></h1>
       <h2 className="nowrap">
         {subtitle}
         <br />
