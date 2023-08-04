@@ -19,7 +19,7 @@ function App() {
   const parsed = queryString.parse(window.location.search);
 
   const [amount, setAmount] = React.useState(
-    parseFloat(parsed.amount || 891250)
+    parseFloat(parsed.amount || 1200000)
   );
 
   const [duration, setDuration] = React.useState(
@@ -27,7 +27,7 @@ function App() {
   );
 
   const [interestRate, setInterestRate] = React.useState(
-    parseFloat(parsed.interestRate || 4.975)
+    parseFloat(parsed.interestRate || 6.975)
   );
 
   const { payments, total, monthlyRate, interest, excel } = Calculator({
