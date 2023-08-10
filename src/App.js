@@ -12,6 +12,7 @@ import queryString from "query-string";
 import Sharing from "./Components/Sharing";
 import ZillowNav from "./Components/ZillowNav";
 import Footer from "./Components/Footer";
+import Amortization from "./Components/Amortization";
 
 const inputClass = "input-reset tc ba b--black-20 pa2 mb2 db w-100";
 
@@ -30,11 +31,18 @@ function App() {
     parseFloat(parsed.interestRate || 6.975)
   );
 
+  const [showAmortization, setShowAmortization] = React.useState(false);
+
   const { payments, total, monthlyRate, interest, excel } = Calculator({
     amount,
     duration,
-    interestRate
+    interestRate,
   });
+
+  const handleAmortizationVisibility = () => {
+    setShowAmortization(!showAmortization);
+    console.log(showAmortization);
+  };
 
   function NavClick(event, params) {
     event.preventDefault();
@@ -94,52 +102,17 @@ function App() {
       </div>
 
       <Sharing {...{ amount, duration, interestRate }} />
-      <div>
-        <div>Excel Function</div>
-        <input
-          readOnly={true}
-          style={{ userSelect: "all" }}
-          type="text"
-          value={excel}
-          className={inputClass}
+      <button onClick={() => handleAmortizationVisibility()}>
+        {showAmortization ? "Hide" : "Show"} amortization schedule{" "}
+      </button>
+      {showAmortization ? (
+        <Amortization
+          payments={payments}
+          excel={excel}
+          inputClass={inputClass}
+          dollarify={dollarify}
         />
-      </div>
-
-      {payments.length > 0 && (
-        <table className="table w-100 table-hover tr collapse">
-          <thead>
-            <tr>
-              <th className="w-10 tl">#</th>
-              <th className="w-20">Payment</th>
-              <th className="w-20">Principal</th>
-              <th className="w-20">Interest</th>
-              <th className="w-30">Remaining Debt</th>
-            </tr>
-          </thead>
-          <tbody>
-            {payments.map(function ({
-              id,
-              index,
-              amount,
-              principal,
-              interest,
-              remainingAmount
-            }) {
-              return (
-                <tr key={id} className="striped--near-white">
-                  <td className="tl bb b--black-50">{index}</td>
-                  <td className="bb b--black-50">{dollarify(amount)}</td>
-                  <td className="bb b--black-50">{dollarify(principal)}</td>
-                  <td className="bb b--black-50">{dollarify(interest)}</td>
-                  <td className="bb b--black-50">
-                    {dollarify(remainingAmount)}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      )}
+      ) : null}
       <Footer />
     </div>
   );
